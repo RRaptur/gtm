@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+group 'me.rapturr'
+version '0.0.1'
+repositories {
+    mavenCentral()
+    mavenLocal()
+    maven {
+        url = 'https://repo.dmulloy2.net/repository/public/'
+
+        content {
+            includeGroup 'org.bukkit'
+            includeGroup 'org.spigotmc'
+
+        }
+    }
+
+    maven { url = 'https://repo.codemc.org/repository/maven-public'}
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:3.0.13'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+
+    compileOnly 'org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT' // The Spigot API with no shadowing. Requires the OSS repo.
+    compileOnly 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT' // The full Spigot server with no shadowing. Requires mavenLocal.
+
+    compileOnly group: "com.comphenix.protocol", name: "ProtocolLib", version: "4.7.0";
+    compileOnly 'de.tr7zw:item-nbt-api-plugin:2.11.1'
+
+
+}
+
+test {
+    useJUnitPlatform()
+    java { toolchain.languageVersion.set(JavaLanguageVersion.of(8)) }
+}
+
+
+jar {
+    destinationDirectory.set(file("C:\\Users\\L0LRa\\Desktop\\1.12.2 Server\\plugins"))
+}

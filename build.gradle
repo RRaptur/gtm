@@ -42,5 +42,5 @@ test {
 
 
 jar {
-    destinationDirectory.set(file("C:\\Users\\L0LRa\\Desktop\\1.12.2 Server\\plugins"))
+    destinationDirectory.set(file("C:\\Users\\L0LRa\\Desktop\\Spigot 1.12.2 server\\plugins"))
 }

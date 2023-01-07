@@ -4,6 +4,9 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import me.rapturr.gtm.car.Car;
 import me.rapturr.gtm.car.CarListeners;
+import me.rapturr.gtm.commands.GTMCommand;
+import me.rapturr.gtm.item.GTMItemManager;
+import me.rapturr.gtm.listeners.GTMItemListeners;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -29,8 +32,10 @@ public class GTM extends JavaPlugin {
         plugin = this;
         protocolManager = ProtocolLibrary.getProtocolManager();
 
+        new GTMItemManager();
         new Car().carEvent(GTM.plugin);
         registerEvents();
+        registerCommands();
 
         sendConsoleMessage(ChatColor.GREEN + "Loaded GTM!");
 
@@ -52,8 +57,14 @@ public class GTM extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(message);
     }
 
+    private void registerCommands() {
+        getCommand("gtm").setExecutor(new GTMCommand());
+    }
+
+
     private void registerEvents() {
         registerEvent(new CarListeners());
+        registerEvent(new GTMItemListeners());
     }
 
     private void registerEvent(Listener listener) {

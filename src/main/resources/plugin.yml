@@ -4,3 +4,7 @@ version: 0.0.1
 api-version: 1.12.2
 depend:
   - ProtocolLib
+commands:
+  gtm:
+    description: a bukkit command
+    usage: /<command>

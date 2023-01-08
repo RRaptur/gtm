@@ -29,7 +29,6 @@ public class CarListeners implements Listener {
         Minecart minecart = (Minecart) vehicle;
         Player player = (Player) entity;
 
-        minecart.setDerailedVelocityMod(new Vector(0, 0, 0));
         minecart.setSlowWhenEmpty(true);
     }
 
@@ -50,9 +49,7 @@ public class CarListeners implements Listener {
         if (vehicle.getType() != EntityType.MINECART) {
             return;
         }
-        Minecart minecart = (Minecart) vehicle;
-        Player player = (Player) entity;
 
-        minecart.setDerailedVelocityMod(new Vector(3, 0, 3));
+
     }
 }

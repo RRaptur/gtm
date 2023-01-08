@@ -1,8 +1,8 @@
 package me.rapturr.gtm.item;
 
 import de.tr7zw.nbtapi.NBTItem;
+import me.rapturr.gtm.item.items.SoulSeeker;
 import me.rapturr.gtm.item.items.TestGTMItem;
-import me.rapturr.gtm.item.items.ZitriqIsDik;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,8 +19,8 @@ public class GTMItemManager {
     public GTMItemManager() {
         gtmItems = new HashMap<>();
 
-        putGTMItem("TEST_ITEM", new TestGTMItem("Test GTM Item", "TEST_ITEM", false, true, Material.BEDROCK, false));
-        putGTMItem("ZITRIQ", new ZitriqIsDik(ChatColor.RED + "Zitriq is Smelly", "ZITRIQ", false, true, Material.STICK, false));
+        putGTMItem("TEST_ITEM", new TestGTMItem("Test GTM Item", "TEST_ITEM", false, true, Material.BEDROCK, false, true));
+        putGTMItem("SOUL_SEEKER", new SoulSeeker(ChatColor.RED + "Soul Seeker", "SOUL_SEEKER", false, true, Material.DIAMOND_HOE, false, false));
     }
 
     public static void putGTMItem(String itemID, GTMItem gtmItem) {

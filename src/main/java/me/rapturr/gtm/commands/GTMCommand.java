@@ -29,7 +29,7 @@ public class GTMCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        GTMItemManager.giveGTMItem(GTMItems.ZITRIQ, player);
+        GTMItemManager.giveGTMItem(GTMItems.SOUL_SEEKER, player);
 
         return true;
     }

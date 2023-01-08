@@ -1,22 +1,25 @@
 package me.rapturr.gtm.car;
 
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import me.rapturr.gtm.GTM;
+import net.minecraft.server.v1_12_R1.World;
+import net.minecraft.server.v1_12_R1.WorldServer;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.util.Vector;
 
 public class Car { //This car will not replace the regular minecart but will only work if it has certain data
@@ -117,6 +120,95 @@ public class Car { //This car will not replace the regular minecart but will onl
             }
         });
 
+        pm.addPacketListener(new PacketAdapter(plugin, ListenerPriority.LOW, PacketType.Play.Client.USE_ENTITY) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+                PacketType packetType = event.getPacketType();
+                PacketContainer container = event.getPacket();
+                Player player = event.getPlayer();
+
+                if (packetType != PacketType.Play.Client.USE_ENTITY) {
+                    return;
+                }
+                if (player == null) {
+                    return;
+                }
+
+                String interactType = readPacket(container, 1);
+
+                if (!interactType.equalsIgnoreCase("INTERACT")) {
+                    return;
+                }
+
+                String handType = readPacket(container, 3);
+
+                if (!handType.equalsIgnoreCase("MAIN_HAND")) {
+                    return;
+                }
+
+                Integer entityID = container.getIntegers().read(0);
+
+                if (entityID == null) {
+                    return;
+                }
+
+                WorldServer world = ((CraftWorld) player.getWorld()).getHandle();
+
+                net.minecraft.server.v1_12_R1.Entity nmsEntity = world.getEntity(entityID);
+
+                if (nmsEntity == null) {
+                    return;
+                }
+
+                Entity entity = nmsEntity.getBukkitEntity();
+
+                if (entity.getType() != EntityType.MINECART) {
+                    return;
+                }
+
+                Minecart minecart = (Minecart) entity;
+
+                PlayerInventory inventory = player.getInventory();
+
+                ItemStack itemStack = inventory.getItemInMainHand();
+
+                if (itemStack.getType() != Material.COAL) {
+                    return;
+                }
+
+                event.setCancelled(true);
+                Vector vector = minecart.getDerailedVelocityMod();
+
+                vector.add(new Vector(1, 0, 1));
+
+                minecart.setDerailedVelocityMod(vector);
+
+                itemStack.setAmount(itemStack.getAmount() -1);
+                player.sendMessage("used fuel!");
+
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+    }
+
+    private String readPacket(PacketContainer container, Integer index) {
+        String value = container.getModifier().read(index).toString();
+
+        if (value == null) {
+            return null;
+        } else return value;
     }
 
     private boolean isPassable(Block block) {

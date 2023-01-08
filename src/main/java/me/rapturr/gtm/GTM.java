@@ -64,7 +64,7 @@ public class GTM extends JavaPlugin {
 
     private void registerEvents() {
         registerEvent(new CarListeners());
-        registerEvent(new GTMItemListeners());
+        registerEvent(new GTMItemListeners(this));
     }
 
     private void registerEvent(Listener listener) {

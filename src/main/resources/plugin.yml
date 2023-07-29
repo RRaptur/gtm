@@ -1,9 +1,10 @@
 name: GTM
 main: me.rapturr.gtm.GTM
 version: 0.0.1
-api-version: 1.12.2
+api-version: 1.8.8
 depend:
   - ProtocolLib
+  - NBTAPI
 commands:
   gtm:
     description: a bukkit command

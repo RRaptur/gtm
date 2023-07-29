@@ -1,7 +1,6 @@
 package me.rapturr.gtm.commands;
 
-import me.rapturr.gtm.item.GTMItemManager;
-import me.rapturr.gtm.item.GTMItems;
+import me.rapturr.gtm.inventory.main.ItemMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,8 +28,7 @@ public class GTMCommand implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        GTMItemManager.giveGTMItem(GTMItems.SOUL_SEEKER, player);
-
+        new ItemMenu("Custom Items", 54).openInventory(player);
         return true;
     }
 }

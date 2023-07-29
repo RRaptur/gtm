@@ -7,13 +7,11 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import me.rapturr.gtm.GTM;
-import net.minecraft.server.v1_12_R1.World;
-import net.minecraft.server.v1_12_R1.WorldServer;
-import org.bukkit.Bukkit;
+import net.minecraft.server.v1_8_R3.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_12_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Minecart;
@@ -24,6 +22,10 @@ import org.bukkit.util.Vector;
 
 public class Car { //This car will not replace the regular minecart but will only work if it has certain data
     ProtocolManager pm = GTM.getProtocolManager();
+
+    public Car() {
+        carEvent(GTM.getInstance());
+    }
 
     public void carEvent(GTM plugin) {
 
@@ -83,7 +85,7 @@ public class Car { //This car will not replace the regular minecart but will onl
                 Location minecartLoc = minecart.getLocation();
 
                 Block front = minecartLoc.add(finalVector).getBlock();
-                Block under = minecartLoc.subtract(0, 0.4, 0).getBlock();
+                Block under = minecartLoc.add(new Vector(vectorX * -1, 0, vectorZ * -1)).subtract(0, 0.4, 0).getBlock();
 
                 boolean forward = value.equalsIgnoreCase("0.98");
                 boolean backward = value.equalsIgnoreCase("-0.98");
@@ -112,7 +114,7 @@ public class Car { //This car will not replace the regular minecart but will onl
 
                 }
                 if (value.equalsIgnoreCase("0.0")) {
-                    minecart.setVelocity(new Vector(0, 0, 0));
+                    minecart.setVelocity(new Vector(0, -1, 0));
 
                 }
 
@@ -120,6 +122,7 @@ public class Car { //This car will not replace the regular minecart but will onl
             }
         });
 
+        /*
         pm.addPacketListener(new PacketAdapter(plugin, ListenerPriority.LOW, PacketType.Play.Client.USE_ENTITY) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
@@ -154,7 +157,7 @@ public class Car { //This car will not replace the regular minecart but will onl
 
                 WorldServer world = ((CraftWorld) player.getWorld()).getHandle();
 
-                net.minecraft.server.v1_12_R1.Entity nmsEntity = world.getEntity(entityID);
+                net.minecraft.server.v1_8_R3.Entity nmsEntity = world.a(entityID);
 
                 if (nmsEntity == null) {
                     return;
@@ -170,7 +173,7 @@ public class Car { //This car will not replace the regular minecart but will onl
 
                 PlayerInventory inventory = player.getInventory();
 
-                ItemStack itemStack = inventory.getItemInMainHand();
+                ItemStack itemStack = inventory.getItemInHand();
 
                 if (itemStack.getType() != Material.COAL) {
                     return;
@@ -186,20 +189,9 @@ public class Car { //This car will not replace the regular minecart but will onl
                 itemStack.setAmount(itemStack.getAmount() -1);
                 player.sendMessage("used fuel!");
 
-
-
-
-
-
-
-
-
-
-
-
-
             }
         });
+         */
 
     }
 
@@ -218,3 +210,4 @@ public class Car { //This car will not replace the regular minecart but will onl
     }
 
 }
+
